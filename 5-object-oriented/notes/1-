@@ -1,0 +1,6 @@
+1- the (class in other languages ar called (constructor or prototype) in JS)
+2- constractor acts as blueprint and can have many instances.
+3- inhertance: with an object to have acces to other objeact properties
+4- each object has aprototype properties which makes inhertance posible in js
+5- (john)->(Person)->(Object)->null //important
+6- 
