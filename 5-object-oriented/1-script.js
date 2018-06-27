@@ -85,10 +85,69 @@
 
 //4- Obect .create method
 //  First we will define an object that will act as prototype and the create object base on that prototype
-var personProto = {
-    calculateAge: function() {
-        console.log(2016 - this.yearOfBirth);
-    }
+// var personProto = {
+//     calculateAge: function() {
+//         console.log(2016 - this.yearOfBirth);
+//     }
+// };
+
+// var john = Object.create(personProto);
+// john.name = 'john';
+// john.yearOfBirth = '1990';
+// john.job = 'teacher';
+
+// //Anothre way
+
+// var jane = Object.create(personProto, {
+//     name: { value: 'jane' },
+//     yearOfBirth: { value: 1969 },
+//     job: { value: 'designer' }
+// });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//5- Primitives vs Object
+//variable associated with premitives are holding the data inside the variable itself
+//variable associated with objects donot contain the object instead it they are contain a refrence where an object sits(just point to the object)
+/*
+//Primitives
+var a = 23;
+var b = a;
+a = 46;
+console.log(a); //return 46
+console.log(b); //return 23
+
+//Objects
+var obj1 = {
+    nam: 'john',
+    age: 26
 };
 
-var john = Object.create(personProto);
+var obj2 = obj1;
+
+obj1.age = 30;
+console.log(obj1.age); //return 30
+console.log(obj2.age); //return 30
+*/
+
+/*
+//Functions
+var age = 27;
+var obj = {
+    name: 'jonas',
+    city: 'Lisbon'
+};
+
+// console.log(obj.name);
+
+function change(a, b) {
+    a = 30;
+    b.city = 'San Francisco';
+}
+
+change(age, obj);
+console.log(age);
+console.log(obj.city);
+*/
+
+//////////////////////////////////////////////////////////////////////////////
