@@ -26,7 +26,7 @@ retirement(66)(1990);
 
 // How the Closuer works:
 //   the inner function has always access to the variables and parameters of its outer function, even after the outer function has returned.
-// after the outer function excuted or returned they variabels and parameters ar stored in the scope chain.
+// after the outer function excuted or returned, its variabels and parameters ar stored in the scope chain.
 // Scope Chain: its like a pointer to all variable objects that function has access to.
 
 ///////////////
