@@ -21,14 +21,20 @@
         if (answer === this.correct) {
             console.log('Your Answer is correct');
             sc = callback(true);
+            // console.log('Score is: ' + keepScore);
 
         } else {
             console.log('Wrong answer!');
             sc = callback(false);
         }
-        // this.questions[no].displayQues();
+        this.displayScore(sc);
 
-    }
+    };
+
+    Question.prototype.displayScore = function(score) {
+        console.log('Your current score is: ' + score);
+        console.log('------------------------------------')
+    };
 
     var q1 = new Question('Is javascript the coolest programing language in the world', ['yes', 'no'], 0);
 
@@ -44,23 +50,23 @@
             if (correct) {
                 sc++;
             }
-            return score;
+            return sc;
         }
     }
 
     //This function use closer
     var keepScore = score();
-    console.log('Score is: ' + score);
+    // console.log('Score is: ' + keepScore);
 
     function nextQues() {
         var answer;
         var no = Math.floor(Math.random() * questions.length);
 
         questions[no].displayQues();
-        console.log(no);
+        // console.log(no);
 
         var answer = prompt('Please select the correct answer');
-        if (answer !== 'exit') {
+        if (answer !== 'ex') {
             // answer = parseInt(answer);
             questions[no].checkAns(parseInt(answer), keepScore);
             nextQues();
