@@ -12,7 +12,13 @@
 
 
 
-6- Section(6): Adding new item to the UI.
+6- Adding new item to the UI.
     1- A technique for adding big chunks of html into DOM.
     2- How to replace parts of strings.
     3- How to do DOM manipulation using the insertAdjacentHTML method.
+
+7- Clearing HTML fiels.
+    1- How to clear HTML fieds.
+    2- How to use querySelectorAll.
+    3- How to convert a list to an array.
+    4- A bette way to loop over an array then for loops: for-each
