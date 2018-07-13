@@ -1,0 +1,21 @@
+1-Create a dummy DOM element and add the string to it. Then, you can manipulate it like any DOM element.
+
+    var el = document.createElement( 'html' );
+    el.innerHTML = "<html><head><title>titleTest</title></head><body><a href='test0'>test01</a><a href='test1'>test02</a><a href='test2'>test03</a></body></html>";
+
+    el.getElementsByTagName( 'a' ); // Live NodeList of your anchor elements
+    Edit: adding a jQuery answer to please the fans!
+
+    var el = $( '<div></div>' );
+    el.html("<html><head><title>titleTest</title></head><body><a href='test0'>test01</a><a href='test1'>test02</a><a href='test2'>test03</a></body></html>");
+
+    $('a', el) // All the anchor elements
+
+2- Insert the adjacentHTML element into the DOM
+
+    element.insertAdjacentHTML(position, text);
+    
+        'beforebegin': Before the element itself.
+        'afterbegin': Just inside the element, before its first child.
+        'beforeend': Just inside the element, after its last child.
+        'afterend': After the element itself.
