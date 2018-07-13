@@ -118,10 +118,13 @@ var UIController = (function() {
             fields = document.querySelectorAll(domStrings.inputDescr + ', ' + domStrings.inputValue);
             fieldsArr = Array.prototype.slice.call(fields);
             //using foreach(callback fn)
-            fieldsArr.foreach(function(current, index, array) {
-                current.value = "";
+            fieldsArr.forEach(function(current, index, array) {
 
+                current.value = "";
             });
+
+            fieldsArr[0].focus();
+
         },
 
         getDomStrings: function() {
