@@ -54,7 +54,7 @@ var budgetController = (function() {
                 newItem = new Income(ID, des, val);
             }
 
-            //Push item int data structure
+            //Push item into data structure
             allData.items[type].push(newItem);
             return newItem;
         },
@@ -83,7 +83,7 @@ var UIController = (function() {
             return {
                 type: document.querySelector(domStrings.inputType).value,
                 description: document.querySelector(domStrings.inputDescr).value,
-                value: document.querySelector(domStrings.inputValue).value,
+                value: parseFloat(document.querySelector(domStrings.inputValue).value),
             };
 
         },
@@ -150,6 +150,12 @@ var controller = (function(budgetCtrl, UICrl) {
         });
     }
 
+    var updateBudget = function() {
+        // 1. Calculate the budget
+        // 2. Return the budget
+        // 6. Display the budget on the UI
+    };
+
     var ctrlAddItem = function() {
 
         var input, newItem;
@@ -157,16 +163,22 @@ var controller = (function(budgetCtrl, UICrl) {
         // 1. Get the field input
         input = UICrl.getInput();
         // console.log
-        // 2. Add the item to the budget controller
-        newItem = budgetCtrl.addItems(input.type, input.description, input.value);
-        // 3. add the item to UI-controller
-        UICrl.outputList(newItem, input.type);
+        if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+            // 2. Add the item to the budget controller
+            newItem = budgetCtrl.addItems(input.type, input.description, input.value);
+            // 3. add the item to UI-controller
+            UICrl.outputList(newItem, input.type);
+        }
+
+
 
         // 4. Clear Fielsd
         UICrl.clearFields();
-        // 4. calculate the budget
-        // 5. Display the budget on the UI
-        // budgetCtrl.testingData();
+        // 5. calculate the budget
+        // 6. Display the budget on the UI
+        // 7. Calculate and update budget
+        updateBudget();
+
 
     };
 

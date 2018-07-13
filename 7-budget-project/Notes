@@ -22,3 +22,22 @@
     2- How to use querySelectorAll.
     3- How to convert a list to an array.
     4- A bette way to loop over an array then for loops: for-each
+
+            var fields, fieldsArr;
+            fields = document.querySelectorAll(domStrings.inputDescr + ', ' + domStrings.inputValue);
+            fieldsArr = Array.prototype.slice.call(fields);
+            //using foreach(callback fn)
+            fieldsArr.forEach(function(current, index, array) {
+
+                current.value = "";
+            });
+
+            fieldsArr[0].focus();
+
+8- Updating Budget.
+    1- How to convert field inputs to numbers;
+        parseFloat(document.querySelector(domStrings.inputValue).value)
+    2- How to prevent false input.
+        if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+            
+        }
