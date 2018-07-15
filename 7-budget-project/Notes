@@ -41,3 +41,8 @@
         if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
             
         }
+
+9- Updating Budget-2.
+    1- How and why to create simple, reusable functions with only one purpose;
+    2- How to sum all elements of an array using the forEAch method.
+    3- Practice DOM manipulation by updating the buget and total values. 
