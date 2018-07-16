@@ -46,3 +46,9 @@
     1- How and why to create simple, reusable functions with only one purpose;
     2- How to sum all elements of an array using the forEAch method.
     3- Practice DOM manipulation by updating the buget and total values. 
+
+10- Setting up the Delete event using event delegation
+    1- How to use event delegation in practive.
+    2- How to use IDs in HTML to connect the UI with the data model.
+    3- How to use parentNode property for DOM traversing.
+    4- More DOM manipulation: removing item from the DOM.
