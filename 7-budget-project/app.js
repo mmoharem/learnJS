@@ -56,7 +56,7 @@ var budgetController = (function(UICrtl) {
                 //Create new ID.
                 ID = itemsArr[itemsArr.length - 1].id + 1;
             } else {
-                ID = 0;
+                ID = -1;
             }
 
 
