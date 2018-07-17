@@ -25,7 +25,7 @@ var BudgetController = (function() {
 
     return {
         addItem: function(type, desc, val) {
-            var itemObj, ID, IDd, itemsArr, index;
+            var itemObj, ID, itemsArr, index;
 
             itemsArr = allData.items[type];
 
@@ -69,6 +69,18 @@ var UIController = (function() {
                 description: document.querySelector('.add__description').value,
                 value: document.querySelector('.add__value').value
             }
+        },
+
+        displayItem: function(type, obj) {
+            var html;
+
+            if(type === 'inc') {
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">Salary</div><div class="right clearfix"><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            } else if(type === 'exp') {
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">Sold car</div><div class="right clearfix"><div class="item__value">+ 1,500.00</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            } 
+
+            newHTML = replace
         }
     }
 })();
@@ -79,15 +91,19 @@ var Controller = (function(budgetCtrl, UICtrl) {
         document.addEventListener('key', function(event) {
             if (event.keyCode === 13 || event.which === 13) {
                 ctrlAddItem();
-            }
+            } 
         });
     };
 
     var ctrlAddItem = function() {
-        console.log('ctrlAddItem running');
+        var inputObj, itemObj;
+
+        // console.log('ctrlAddItem running');
         inputObj = UICtrl.getInput();
         console.log(inputObj);
-        budgetCtrl.addItem(inputObj.type, inputObj.description, inputObj.value)
+        itemObj = budgetCtrl.addItem(inputObj.type, inputObj.description, inputObj.value);
+        UICtrl.displayItem(inputObj.type, itemObj);
+
 
     };
 
