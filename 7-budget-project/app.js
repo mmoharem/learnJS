@@ -10,6 +10,7 @@ var budgetController = (function(UICrtl) {
         this.id = id;
         this.descr = descr;
         this.value = value;
+        this.expPercent = 0;
     };
 
     var Income = function(id, descr, value) {
@@ -29,6 +30,24 @@ var budgetController = (function(UICrtl) {
 
         });
     }
+    Expense.prototype.clacExpPercent = function() {
+        var expArr, expPercent;
+
+        expArr = allData.items['exp']
+            // this.expPercent = 
+            // expArr.forEach(function(current) {
+            //     current.value / allData.total.inc * 100
+            // });
+
+        // for (var i = 0; i > expArr.length; i++) {
+        //     Math.round(expArr[i].value / allData.total.inc * 100)
+        // }
+
+        expPercent = expArr.map(function(current) {
+            return current.value / allData.total.inc * 100
+        });
+
+    };
 
     var allData = {
         items: {
@@ -42,6 +61,7 @@ var budgetController = (function(UICrtl) {
         budget: 0,
         percentage: -1
     };
+
 
 
     return {
@@ -261,6 +281,10 @@ var controller = (function(budgetCtrl, UICrl) {
         UICrl.displayBudget(budget)
     };
 
+    // var ctrlAddExpPercent = function() {
+    //     new
+    // };
+
     var ctrlAddItem = function() {
 
         var input, newItem;
@@ -271,6 +295,9 @@ var controller = (function(budgetCtrl, UICrl) {
         if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
             // 2. Add the item to the budget controller
             newItem = budgetCtrl.addItems(input.type, input.description, input.value);
+
+            console.log(newItem.clacExpPercent());
+
             // 3. add the item to UI-controller
             UICrl.addListItem(newItem, input.type);
             // 4. Calculate and update budget

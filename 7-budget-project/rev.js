@@ -53,14 +53,10 @@ var BudgetController = (function() {
         },
 
         deleteItem: function(type, ID) {
-            //exp[1,2,4,5,7]
-            // exp.id =
-            console.log(ID);
+
             allData.items[type].forEach(function(current, index, array) {
                 if (current.id === ID) {
-                    // console.log('index');
-                    // console.log(index);
-                    // console.log(array[index]);
+
                     array.splice(index, 1);
                 }
                 // console.log(current.id);
