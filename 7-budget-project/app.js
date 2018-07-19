@@ -197,6 +197,7 @@ var UIController = (function() {
         clearFields: function() {
             var fields, fieldsArr;
             fields = document.querySelectorAll(domStrings.inputDescr + ', ' + domStrings.inputValue);
+            //Change fiels to array
             fieldsArr = Array.prototype.slice.call(fields);
             //using foreach(callback fn)
             fieldsArr.forEach(function(current, index, array) {
