@@ -52,3 +52,7 @@
     2- How to use IDs in HTML to connect the UI with the data model.
     3- How to use parentNode property for DOM traversing.
     4- More DOM manipulation: removing item from the DOM.
+
+11- Update and Display Expense Percentage
+    1-
+    2- How to create our own forEach function but for nodeLists instead of arrays.

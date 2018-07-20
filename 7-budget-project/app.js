@@ -10,14 +10,29 @@ var budgetController = (function(UICrtl) {
         this.id = id;
         this.descr = descr;
         this.value = value;
-        this.expPercent = 0;
+        this.expPercent = -1;
+
     };
+
+    Expense.prototype.calcPercent = function(totalInc) {
+        if (totalInc > 0) {
+            this.expPercent = Math.round(this.value / totalInc * 100);
+        } else {
+            this.expPercent = -1;
+        }
+    };
+
+    Expense.prototype.getPercent = function() {
+        return this.expPercent;
+    }
 
     var Income = function(id, descr, value) {
         this.id = id;
         this.descr = descr;
         this.value = value;
     };
+
+
 
     var calcTotal = function(type) {
         var itemsArr = allData.items[type];
@@ -29,25 +44,25 @@ var budgetController = (function(UICrtl) {
             allData.total[type] = sum;
 
         });
-    }
-    Expense.prototype.clacExpPercent = function() {
-        var expArr, expPercent;
-
-        expArr = allData.items['exp']
-            // this.expPercent = 
-            // expArr.forEach(function(current) {
-            //     current.value / allData.total.inc * 100
-            // });
-
-        // for (var i = 0; i > expArr.length; i++) {
-        //     Math.round(expArr[i].value / allData.total.inc * 100)
-        // }
-
-        expPercent = expArr.map(function(current) {
-            return current.value / allData.total.inc * 100
-        });
-
     };
+    // Expense.prototype.ExpPercent = function(totalInc) {
+    //     var expArr, expPercent;
+
+    //     expArr = allData.items['exp']
+    //         // this.expPercent = 
+    //         // expArr.forEach(function(current) {
+    //         //     current.value / allData.total.inc * 100
+    //         // });
+
+    //     // for (var i = 0; i > expArr.length; i++) {
+    //     //     Math.round(expArr[i].value / allData.total.inc * 100)
+    //     // }
+
+    //     expPercent = expArr.map(function(current) {
+    //         return current.value / allData.total.inc * 100
+    //     });
+
+    // };
 
     var allData = {
         items: {
@@ -113,6 +128,26 @@ var budgetController = (function(UICrtl) {
 
         },
 
+        clacExpPercent: function() {
+            var expArr = allData.items.exp;
+
+            expArr.forEach(function(current) {
+                current.calcPercent(allData.total.inc);
+            });
+        },
+
+        getExpPercent: function() {
+            expArr = allData.items.exp;
+
+            expPercArr = expArr.map(function(current) {
+                return current.getPercent();
+            });
+
+            return expPercArr;
+        },
+
+
+
         getBudget: function() {
             return {
                 totalExp: allData.total.exp,
@@ -163,8 +198,8 @@ var UIController = (function() {
         inputValue: '.add__value',
         addBtn: '.add__btn',
         // 2. Output list.
-        incContainer: '.income__list',
-        expContainer: '.expenses__list',
+        incContainer: '.inc__list',
+        expContainer: '.exp__list',
         // 3. Output Budget.
         budgetVal: '.budget__value',
         incVal: '.budget__income--value',
@@ -209,7 +244,13 @@ var UIController = (function() {
 
         },
 
-        removeListItem: function(itmId) {
+        displayExpPercent: function() {
+
+            bind
+            document.
+        }
+
+            removeListItem: function(itmId) {
             var el = document.getElementById(itmId);
             el.parentNode.removeChild(el);
         },
@@ -255,10 +296,10 @@ var UIController = (function() {
 
 })();
 
-var controller = (function(budgetCtrl, UICrl) {
+var controller = (function(budgetCtrl, UICtrl) {
 
     var setEventListner = function() {
-        var domStr = UICrl.getDomStrings();
+        var domStr = UICtrl.getDomStrings();
 
         document.querySelector(domStr.addBtn).addEventListener('click', ctrlAddItem);
 
@@ -278,41 +319,49 @@ var controller = (function(budgetCtrl, UICrl) {
         var budget = budgetCtrl.getBudget();
         // console.log(budget);
         // 6. Display the budget on the UI
-        UICrl.displayBudget(budget)
+        UICtrl.displayBudget(budget)
     };
 
-    // var ctrlAddExpPercent = function() {
-    //     new
-    // };
+    var UpdateExpPercent = function() {
+        // 1. calculate Exp Percentage
+        budgetCtrl.clacExpPercent();
+        // 2. Get the Exp Percentage
+        getExpPercent = budgetCtrl.getExpPercent();
+        console.log(getExpPercent);
+        // 3. Add to ui
+        // 4. Update
+    };
 
     var ctrlAddItem = function() {
 
         var input, newItem;
 
         // 1. Get the field input
-        input = UICrl.getInput();
+        input = UICtrl.getInput();
         // console.log
         if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
             // 2. Add the item to the budget controller
             newItem = budgetCtrl.addItems(input.type, input.description, input.value);
 
-            console.log(newItem.clacExpPercent());
-
             // 3. add the item to UI-controller
-            UICrl.addListItem(newItem, input.type);
+            UICtrl.addListItem(newItem, input.type);
             // 4. Calculate and update budget
             updateBudget();
+            // 5. Update Exp Percentage
+            UpdateExpPercent();
         }
         // 4. Clear Fielsd
-        UICrl.clearFields();
+        UICtrl.clearFields();
         // 5. calculate the budget
         // 6. Display the budget on the UI
         // 7. Calculate and update budget
+
+
     };
 
     var ctrlDeleteItem = function(event) {
         var itemID, ID, type, input;
-        input = UICrl.getInput();
+        input = UICtrl.getInput();
         itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
         if (itemID) {
             splitID = itemID.split('-');
@@ -322,7 +371,7 @@ var controller = (function(budgetCtrl, UICrl) {
             budgetCtrl.deleteItem(type, ID);
 
             //2. Delete the item from UI
-            UICrl.removeListItem(itemID);
+            UICtrl.removeListItem(itemID);
             //3. Update and show the new buget UI
             updateBudget();
         };
@@ -332,7 +381,7 @@ var controller = (function(budgetCtrl, UICrl) {
     return {
         init: function() {
             console.log('Application has started.');
-            UICrl.displayBudget({
+            UICtrl.displayBudget({
                 budget: 0,
                 totalInc: 0,
                 totalExp: 0,
