@@ -56,3 +56,9 @@
 11- Update and Display Expense Percentage
     1-
     2- How to create our own forEach function but for nodeLists instead of arrays.
+
+
+12- Formatting numbers 
+    1. adding (+ or -)
+    2. add 2 decimal points
+    3. add comma seprating thousends

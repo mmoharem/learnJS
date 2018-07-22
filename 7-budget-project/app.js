@@ -216,6 +216,43 @@ var UIController = (function() {
         itemPercent: '.item__percentage'
     }
 
+    var formateNumbers = function(num, type) {
+        // adding (+ or -), add 2 decimal points, add comma seprating thousends
+        // if (type === 'inc') {
+        //     num = '+' + num;
+        // } else if (type === 'exp') {
+        //     num = '+' - num;
+        // }
+        // return num;
+
+        num = Math.abs(num); //abs: absolute numer without - or + sign.
+        num = num.toFixed(2); //toFixed is a method of num prototype.
+
+        numSplit = num.split('.');
+
+        int = numSplit[0];
+        dec = numSplit[1];
+
+        if (int.length > 3) {
+            int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3);
+        }
+
+        // type === 'exp' ? sign = '-' : sign = '+';
+        // num = sign + int + '.' + dec;
+
+        return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+
+    };
+
+    //Creating Reusable code for node list
+    var nodelistForeach = function(list, callback) {
+
+        for (var i = 0; i < list.length; i++) {
+
+            callback(list[i], i);
+        }
+    };
+
     return {
         getInput: function() {
             return {
@@ -224,6 +261,20 @@ var UIController = (function() {
                 value: parseFloat(document.querySelector(domStrings.inputValue).value),
             };
 
+        },
+
+        changeInpType: function() {
+            var fields = document.querySelectorAll(
+                domStrings.inputType + ',' +
+                domStrings.inputDescr + ',' +
+                domStrings.inputValue
+            );
+
+            nodelistForeach(fields, function(current) {
+                current.classList.toggle('red-focus');
+            });
+
+            document.querySelector(domStrings.addBtn).classList.toggle('red');
         },
 
         addListItem: function(obj, type) {
@@ -241,7 +292,7 @@ var UIController = (function() {
 
 
             // 2- Replace the placeholdr text with some actual data
-            newHtml = html.replace('%id%', obj.id).replace('%description%', obj.descr).replace('%value%', obj.value);
+            newHtml = html.replace('%id%', obj.id).replace('%description%', obj.descr).replace('%value%', formateNumbers(obj.value, type));
             // newHtml = newHtml.replace('%description%', obj.descr);
             // newHtml = newHtml.replace('%value%', obj.value);
             // 3- Insert the adjacentHTML element into the DOM
@@ -254,15 +305,6 @@ var UIController = (function() {
         displayExpPercent: function(expPercent) {
 
             var fields = document.querySelectorAll(domStrings.itemPercent);
-
-            //Creating Reusable code for node list
-            var nodelistForeach = function(list, callback) {
-
-                for (var i = 0; i < list.length; i++) {
-
-                    callback(list[i], i);
-                }
-            };
 
             nodelistForeach(fields, function(current, index) {
 
@@ -299,11 +341,13 @@ var UIController = (function() {
         displayBudget: function(obj) {
 
             //output budget
-            document.querySelector(domStrings.budgetVal).textContent = obj.budget;
+            var type = obj.budget > 0 ? type = 'inc' : 'exp';
+
+            document.querySelector(domStrings.budgetVal).textContent = formateNumbers(obj.budget, type);
             //otput total income
-            document.querySelector(domStrings.incVal).innerHTML = obj.totalInc;
+            document.querySelector(domStrings.incVal).innerHTML = formateNumbers(obj.totalInc, 'inc');
             //output total expanses
-            document.querySelector(domStrings.expVal).innerHTML = obj.totalExp;
+            document.querySelector(domStrings.expVal).innerHTML = formateNumbers(obj.totalExp, 'exp');
             // output percentage
             if (obj.percentage > 0) {
                 document.querySelector(domStrings.expPercentage).innerHTML = obj.percentage + '%';
@@ -311,9 +355,6 @@ var UIController = (function() {
                 document.querySelector(domStrings.expPercentage).innerHTML = '0%';
             }
         },
-
-
-
 
         getDomStrings: function() {
             return domStrings
@@ -332,6 +373,7 @@ var controller = (function(budgetCtrl, UICtrl) {
     var setEventListner = function() {
         var domStr = UICtrl.getDomStrings();
 
+        // Event For adding items
         document.querySelector(domStr.addBtn).addEventListener('click', ctrlAddItem);
 
         document.addEventListener('keypress', function(e) { // e stand for event
@@ -340,7 +382,12 @@ var controller = (function(budgetCtrl, UICtrl) {
             }
         });
 
+        // Event For Deleting items
         document.querySelector(domStr.container).addEventListener('click', ctrlDeleteItem);
+
+        // Event For select ui exp or ininput type
+        document.querySelector(domStr.inputType).addEventListener('change', UICtrl.changeInpType);
+
     };
 
     var updateBudget = function() {
