@@ -3,7 +3,9 @@
 //     console.log(event);
 // });
 
-/////////////////////// budgetController....
+////////////////////////////////////  BudgetController......................................................////////
+// .....................................................................................................////////
+
 var budgetController = (function(UICrtl) {
 
     var Expense = function(id, descr, value) {
@@ -189,7 +191,9 @@ var budgetController = (function(UICrtl) {
 })(UIController);
 
 
-//////////////////// UIController...................
+////////////////////////////////////  UIController......................................................////////
+// .....................................................................................................////////
+
 var UIController = (function() {
     // var el = document.querySelector;
     var domStrings = {
@@ -247,37 +251,29 @@ var UIController = (function() {
 
         },
 
-        displayExpPercent: function() {
-            var expPercent = [1, 2, 3, 4, 5];
-            var fields = document.querySelectorAll(domStrings.itemPercent);
-            // var fields = [1, 2, 3, 4, 5]
+        displayExpPercent: function(expPercent) {
 
-            console.log('displayExpPercent was called');
+            var fields = document.querySelectorAll(domStrings.itemPercent);
+
             //Creating Reusable code for node list
             var nodelistForeach = function(list, callback) {
-                for (var i = 0; i < list.lenght; i++) {
-                    // callback(list[i], i);
-                    callback();
 
+                for (var i = 0; i < list.length; i++) {
+
+                    callback(list[i], i);
                 }
-                // console.log('x');
-                // console.log(x);
-
             };
 
+            nodelistForeach(fields, function(current, index) {
 
-            // nodelistForeach(fields, function(current, index) {
+                if (expPercent[index] > 0) {
 
-            //     console.log('ddd');
-            //     current.textContent = expPercent[index] + '%';
-            // if (expPercent[index] > 0) {
-            //     current.textContent = expPercent[index] + '%';
-            //     console.log(expPercent[index]);
-            // } else {
-            //     current.textContent = '--%';
-            // }
-            // });
-            nodelistForeach(fields, function() { console.log('ddd') });
+                    current.textContent = expPercent[index] + '%';
+                } else {
+
+                    current.textContent = '--%';
+                }
+            });
         },
 
         removeListItem: function(itmId) {
@@ -301,6 +297,7 @@ var UIController = (function() {
         },
 
         displayBudget: function(obj) {
+
             //output budget
             document.querySelector(domStrings.budgetVal).textContent = obj.budget;
             //otput total income
@@ -317,6 +314,7 @@ var UIController = (function() {
 
 
 
+
         getDomStrings: function() {
             return domStrings
         }
@@ -325,6 +323,9 @@ var UIController = (function() {
     };
 
 })();
+
+////////////////////////////////////  Controller......................................................////////
+// .....................................................................................................////////
 
 var controller = (function(budgetCtrl, UICtrl) {
 
@@ -350,6 +351,8 @@ var controller = (function(budgetCtrl, UICtrl) {
         // console.log(budget);
         // 6. Display the budget on the UI
         UICtrl.displayBudget(budget)
+
+        UpdateExpPercent();
     };
 
     var UpdateExpPercent = function() {
@@ -359,8 +362,9 @@ var controller = (function(budgetCtrl, UICtrl) {
         expPercent = budgetCtrl.getExpPercent();
 
         // 3. Add to ui
-        UICtrl.displayExpPercent();
+        UICtrl.displayExpPercent(expPercent);
         // 4. Update
+
     };
 
     var ctrlAddItem = function() {
@@ -379,7 +383,7 @@ var controller = (function(budgetCtrl, UICtrl) {
             // 4. Calculate and update budget
             updateBudget();
             // 5. Update Exp Percentage
-            UpdateExpPercent();
+
         }
         // 4. Clear Fielsd
         UICtrl.clearFields();
